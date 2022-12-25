@@ -50,10 +50,10 @@ public class PasswordBreaking {
 	    }   
           }
           
-          public static void lenghtTest(String passwordByWritten){
-              int numberOfLetters = passwordByWritten.length();
+          public static void lenghtTest(String password){
+              int numberOfCharacters = password.length();
               
-              if(numberOfLetters > 20){
+              if(numberOfCharacters > 20){
                   System.out.println("This password is invalid");
               }
               else{
