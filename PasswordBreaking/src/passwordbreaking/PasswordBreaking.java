@@ -46,12 +46,13 @@ public class PasswordBreaking {
 		    if(letterTest(passwordByWritten)) {
 		    	System.out.println(passwordByWritten);
 		    }
+		    else {
+		    	
+		    }
 			}
 		}catch(FileNotFoundException f) {
 			f.printStackTrace();
 		}
-		
-	     
 	    }	    
         
   
