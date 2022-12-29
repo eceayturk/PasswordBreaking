@@ -1,0 +1,30 @@
+package com.company;
+
+
+public class Tree<String> {
+
+    private Node<String> root;
+
+    public Tree(Node<String> root) {
+        this.root = root;
+    }
+
+
+    public boolean exists(String key) {
+        return find(root, key);
+    }
+
+    private boolean find(Node<String> node, String keyNode) {
+        boolean res = false;
+        if (node.getData().equals(keyNode))
+            return true;
+
+        else {
+            for (Node<String> child : node.getChildren())
+                if (find(child, keyNode))
+                    res = true;
+        }
+
+        return res;
+    }
+}
