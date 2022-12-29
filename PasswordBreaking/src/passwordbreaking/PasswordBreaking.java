@@ -20,13 +20,13 @@ public class PasswordBreaking {
 		String password;
 		
 		try {
-			Scanner scan = new Scanner(fp);
+			Scanner scan = new Scanner(fp);   //read the file
 			while(scan.hasNext()) {
 		    password = scan.nextLine();
  
 		    int[] pass = new int[password.length()];
 	 
-		    if(numericTest(password) && lenghtTest(password) ) {
+		    if(numericTest(password) && lenghtTest(password) ) {  //checking whether the password is digit and smaller than 20 lenght
 		    	
 		    	String [] passs  = password.split("");
 			try {
@@ -43,7 +43,7 @@ public class PasswordBreaking {
 		    for(int i = 0; i < pass.length; i++ ) {
 		    	passwordByWritten += digits[pass[i]];
 		    }
-		    if(letterTest(passwordByWritten)) {
+		    if(letterTest(passwordByWritten)) { //checking 3rd case (vowel-consonants)
 		    	System.out.println(passwordByWritten);
 		    }
 		    else {
@@ -57,32 +57,32 @@ public class PasswordBreaking {
         
   
           public static boolean letterTest(String passwordByWritten){
-          ArrayList<AbstractMap.SimpleEntry<String,Integer>> listOfPair = new ArrayList<>();
-          AbstractMap.SimpleEntry<String,Integer> apm;
-         int total;
+          //ArrayList<AbstractMap.SimpleEntry<String,Integer>> listOfPair = new ArrayList<>();
+          //AbstractMap.SimpleEntry<String,Integer> apm;
+            int total;
 	    String passChars[];
 	    String newString = "";
 	    for(int k = 0; k < passwordByWritten.length(); k++) {
 	    	total = 0;
-	    	newString = passwordByWritten.substring(0, k+1);
+	    	newString = passwordByWritten.substring(0, k+1);   //looks at the substrings in order from the beginning.
 	    	//System.out.println(newString);
 	    	for(int l = 0; l < newString.length(); l ++) {
 	    		
-	    		passChars = newString.split("");
-	    	if(passChars[l].matches("a|e|i|o|u")) {
+	        passChars = newString.split("");
+	    	if(passChars[l].matches("a|e|i|o|u")) { 
 	    		
-	    		total++;
+	    		total++; 
 	    		//listOfPair.add(apm = new AbstractMap.SimpleEntry<>(passChars[k],1));
 	    		
 	    		
 	    	}else {
 	    		total--;
 	    		//listOfPair.add(apm = new AbstractMap.SimpleEntry<>(passChars[k],-1));
+	    	} //By increasing or decreasing the total, it is checked whether each substring meets the 3rd condition.
 	    	}
-	    	}
-	    	if(total > 0) {
+	    	if(total > 0) { //that means more vowels.
 	    	System.out.println("Number of vowels can not be more than number of consonant!! Invalid");
-            return false;
+            return false; //stop the loop
 	    
 	    	}
 	    }
@@ -90,7 +90,7 @@ public class PasswordBreaking {
 
           }
           
-          public static boolean lenghtTest(String password){
+          public static boolean lenghtTest(String password){ //character length test
               int numberOfCharacters = password.length();
               
               if(numberOfCharacters <= 0 && numberOfCharacters > 20){
@@ -104,7 +104,7 @@ public class PasswordBreaking {
           }
           
           
-         public static boolean numericTest(String password){
+         public static boolean numericTest(String password){ //the passport contain only numbers or not test
              
              boolean isValid = true;
              for (int i = 0; i < password.length(); i++) {
@@ -125,5 +125,3 @@ public class PasswordBreaking {
          }
  
 	}
-
-
