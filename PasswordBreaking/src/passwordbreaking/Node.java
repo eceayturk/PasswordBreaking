@@ -1,57 +1,33 @@
-package com.company;
+package passwordbreaking;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+class Node {
 
-public class Node<String> {
-    private String data;
-    private List<Node<String>> children;
-    private Node<String> parent;
+    int id;
+    String name;
+    String data;
+    Node parent;
+    List<Node> children = new ArrayList<>();
 
-    public Node(String data) {
+    static int maxNrOfChildren;
+
+    Node(String node) {
+        name = node;
+    }
+
+    Node(String data, int id) {
         this.data = data;
-        this.children = new ArrayList<Node<String>>();
+        this.id = id;
+
     }
 
 
-    public Node(Node<String> node) {
-        this.data = node.getData();
-        children = new ArrayList<Node<String>>();
-    }
-
-    public void addChild(Node<String> child) {
-        child.setParent(this);
-        children.add(child);
-    }
-
-
-    public List<Node<String>> getChildren() {
-        return this.children;
-    }
-
-
-    public String getData() {
-        return this.data;
-    }
-
-
-    public void setParent(Node<String> parent) {
-        this.parent = parent;
-    }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        if (null == obj)
-            return false;
-
-        if (obj instanceof Node) {
-            if (((Node<?>) obj).getData().equals(this.data))
-                return true;
+    void addChild(Node child) { // add child as node
+        int limit = this.children.size();
+        if (limit < maxNrOfChildren) {
+            child.parent = this;
+            this.children.add(child);
         }
-
-        return false;
     }
-
 }
