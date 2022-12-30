@@ -13,6 +13,18 @@ public class PasswordBreaking {
 
 
 	public static void main(String[] args) {
+		
+		// Tree1 class ını initalize etme
+        	// Node1<String> root = new Node1<String>("0");
+        	// Tree1<String> tree1 = new Tree1<String>(root);
+         
+        	// Çocuk ekleme
+        	//root.addChild(new Node1<String>("1"));
+        
+        	//Verilen string tree de var mı diye bakma
+        	// tree1.exists("str");
+
+		
 		File fp = new File("numbers.txt");
 		
 		
