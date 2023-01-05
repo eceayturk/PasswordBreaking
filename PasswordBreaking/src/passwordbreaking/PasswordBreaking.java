@@ -67,17 +67,17 @@ public class PasswordBreaking {
                     
                 }
                     if(flag == true ){
-                       if(letterTest(newWritten)){
+                       if(letterTest(newWritten)){ 
                            if(numericTest(enteredPass)){
                                if(lenghtTest(enteredPass)){
 
                                 System.out.println("Valid Password");
-                                String breakedPas = "";
+                                String breakedPas = ""; //definition of the password which will be break
                                 
-                                for(int i = 0; i< newPas.length; i++){
-                                    for(int j = 0; j< 10; j++){
-                                       if(Integer.parseInt(newPas[i]) == j){
-                                           breakedPas += j+"";
+                                for(int i = 0; i< newPas.length; i++){ //for each digit
+                                    for(int j = 0; j< 10; j++){  //possible digits between 0-9 range
+                                       if(Integer.parseInt(newPas[i]) == j){ //if user's password's ith digit equals to one of the possible digit 
+                                           breakedPas += j+""; //than it is added to breakedPas
                                        }
                                     }
                                 }
@@ -89,12 +89,12 @@ public class PasswordBreaking {
                               return;
                            }
                             }
-                            else{
-                                if(numericTest(enteredPass)){
+                            else{ //if password dont pass the letter test, that means it is invalid
+                                if(numericTest(enteredPass)){ //again check these tests
                                     if(lenghtTest(enteredPass)){
                                    System.out.println("Invalid but not exist in m-ary trie!! NOW IS ADDED: ");
                                    
-                                   addTree(newWritten,newWritten,enteredPass, flag); 
+                                   addTree(newWritten,newWritten,enteredPass, flag); //if it is not valid but not in trie, than added 
                                    
                                 } 
                                 }
@@ -127,20 +127,22 @@ public class PasswordBreaking {
               return flag;
           }
         
-          public static boolean letterTest(String passwordByWritten){
+          public static boolean letterTest(String passwordByWritten){ 
+          //check which the number of vowels is more than the number of consonants.
+          
           //ArrayList<AbstractMap.SimpleEntry<String,Integer>> listOfPair = new ArrayList<>();
           //AbstractMap.SimpleEntry<String,Integer> apm;
-            int total;
-	    String passChars[];
-	    String newString = "";
-	    for(int k = 0; k < passwordByWritten.length(); k++) {
+          
+            int total; //definition of the total variable which counts vowels and constonents, compute the total value
+	    String passChars[]; //get each characacter of substrings
+	    String newString = ""; //merged version of password
+	    for(int k = 0; k < passwordByWritten.length(); k++) { 
 	    	total = 0;
 	    	newString = passwordByWritten.substring(0, k+1);   //looks at the substrings in order from the beginning.
-	    	//System.out.println(newString);
-	    	for(int l = 0; l < newString.length(); l ++) {
+	    	for(int l = 0; l < newString.length(); l ++) {  
 	    		
 	        passChars = newString.split("");
-	    	if(passChars[l].matches("a|e|i|o|u")) { 
+	    	if(passChars[l].matches("a|e|i|o|u")) { //for each character, checks char is in list or not. 
 	    		
 	    		total++; 
 	    		//listOfPair.add(apm = new AbstractMap.SimpleEntry<>(passChars[k],1));
@@ -148,12 +150,11 @@ public class PasswordBreaking {
 	    	}else {
 	    		total--;
 	    		//listOfPair.add(apm = new AbstractMap.SimpleEntry<>(passChars[k],-1));
+                        
 	    	} //By increasing or decreasing the total, it is checked whether each substring meets the 3rd condition.
 	    	}
 	    	if(total > 0) { //that means more vowels.
-	    	//System.out.println("Number of vowels can not be more than number of consonant!! Invalid");
-            return false; //stop the loop
-	    
+                return false;
 	    	}
 	    }
 	    return true;
@@ -161,10 +162,10 @@ public class PasswordBreaking {
           }
           
           public static boolean lenghtTest(String password){ //character length test
-              int numberOfCharacters = password.length();
+              int numberOfCharacters = password.length(); 
               
-              if(numberOfCharacters > 20){
-                  System.out.println("Password lenght must be in range 0-20!! Invalid");
+              if(numberOfCharacters > 20){  //if password's lenght bigger than 20 
+                  System.out.println("Password lenght must be in range 0-20!! Invalid"); //error message will be appear
                   return false;
               }
               else{
@@ -175,19 +176,18 @@ public class PasswordBreaking {
           
          public static boolean numericTest(String password){ //the passport contain only numbers or not test
              
-             boolean isValid = true;
+             boolean isValid = true; 
              for (int i = 0; i < password.length(); i++) {
-             if (!Character.isDigit(password.charAt(i))) {
+             if (!Character.isDigit(password.charAt(i))) { //check all characters of passwords that is digit or not digit
              isValid = false;
              break;
              }
              }
-
              if (isValid) {
                  return true;
              } 
              else {
-             System.out.println("Password must have just numeric values!! Invalid");
+             System.out.println("Password must have just numeric values!! Invalid"); //if there is not digit character, error message will be appear 
              return false;
 
 }
