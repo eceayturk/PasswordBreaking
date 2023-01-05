@@ -15,16 +15,17 @@ public class PasswordBreaking {
 	public static void main(String[] args) {
 		File fp = new File("numbers.txt");
                 
-		
-		Node1<String> nodes = null;
-                Tree1<String> tree1 = null;
+	
 		String[] digits = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};	 
 		String password;
+                int[] newPass;
+                String[] newPas ={} ;
                 boolean flag = true;
                 String newWritten = "";
                 Scanner scann = new Scanner(System.in);
                 System.out.println("Please enter a password: ");
 		String enteredPass = scann.next();
+                System.out.println("\nAdding, scanning and breaking may take some time.\nPLEASE WAIT UNTIL THE RESULTS APPEAR!\n");
                 
                 
 		try {
@@ -33,23 +34,25 @@ public class PasswordBreaking {
 		        password = scan.nextLine();
  
 		    int[] pass = new int[password.length()];
-                    int[] newPass = new int[enteredPass.length()];
+                   newPass = new int[enteredPass.length()];
 	 
 		    if(numericTest(password) && lenghtTest(password) ) {  //checking whether the password is digit and smaller than 20 lenght
-		    	String[] newPas = enteredPass.split("");
+		    	newPas = enteredPass.split("");
 		    	String [] passs  = password.split("");
-			try {
+			
 				for(int j = 0; j < passs.length; j++) {
 				pass[j] = Integer.parseInt(passs[j]);
 	             }
-                                for(int k = 0; k < newPas.length; k++){
-                                 newPass[k] = Integer.parseInt(newPas[k]);
-                                }
-			}catch(NumberFormatException n) {
-				System.out.println("You did not enter password!!");
+                   
 			}
-			}
-		   	    
+                try{
+		   for(int k = 0; k < newPas.length; k++){
+                   newPass[k] = Integer.parseInt(newPas[k]);
+                   }
+                }catch(NumberFormatException e){
+                   // System.out.println("Your password did not pass numeric and length test.");
+                    break;
+                }
 		   String passwordByWritten = "";
                    newWritten = "";
 		    
@@ -59,42 +62,74 @@ public class PasswordBreaking {
                     for(int i = 0; i < newPass.length; i ++){
                         newWritten += digits[newPass[i]];
                     }
-              
-		    if(!letterTest(passwordByWritten)) { //checking 3rd case (vowel-consonants)
-		    	//System.out.println(passwordByWritten);
-                         nodes = new Node1<String>(passwordByWritten);    
-                         
-                         tree1 = new Tree1<String>(nodes);
-                         List<Node1<String>> childs = nodes.getChildren();
-                         
-                             nodes.addChild(new Node1<String> (passwordByWritten));
-                            // current = nodes;
-
-                        //System.out.println(nodes.getData() + "*******");
+                    flag = addTree(passwordByWritten,newWritten,enteredPass,flag);
+                  
                     
-                        while(tree1.exists(newWritten)){
-                            System.out.println("Invalid password: "+enteredPass + ": "+nodes.getData());
+                }
+                    if(flag == true ){
+                       //System.out.println("Password is valid"); 
+                      
+                       if(letterTest(newWritten)){
+                           if(numericTest(enteredPass)){
+                               if(lenghtTest(enteredPass)){
+
+                                System.out.println("Valid Password");
+                                String breakedPas = "";
+                                
+                                for(int i = 0; i< newPas.length; i++){
+                                    for(int j = 0; j< 10; j++){
+                                       if(Integer.parseInt(newPas[i]) == j){
+                                           breakedPas += j+"";
+                                       }
+                                    }
+                                }
+                                System.out.println("Password is broken!!! And your password is: " + breakedPas);
+                               }else{
+                                   return;
+                               }
+                           }else{
+                              return;
+                           }
+                            }
+                            else{
+                                if(numericTest(enteredPass)){
+                                    if(lenghtTest(enteredPass)){
+                                   System.out.println("Invalid but not exist in m-ary trie!! NOW IS ADDED: ");
+                                   
+                                   addTree(newWritten,newWritten,enteredPass, flag); 
+                                   
+                                } 
+                                }
+                       }                      
+               }
+		}catch(FileNotFoundException f) {
+			f.printStackTrace();
+		}   
+	    }	    
+        
+          public static boolean addTree(String passwordByWritten,String newWritten,String enteredPass, boolean flag){
+             
+              if(!letterTest(passwordByWritten)) { //checking 3rd case (vowel-consonants)
+		    	//System.out.println(passwordByWritten);
+                        
+                         Node1<String> nodes = new Node1<String>(passwordByWritten);    
+                         
+                         Tree1<String> tree1 = new Tree1<String>(nodes);
+                         //List<Node1<String>> childs = nodes.getChildren();
+                          while(tree1.exists(newWritten)){
+                            System.out.println("Invalid password!!: "+ enteredPass+
+                                     "\nYour password is in m-ary trie --> "+ ": "+nodes.getData());
+                            
                             flag = false;
                             break;
                            
-                        } 
+                        }
+                        nodes.addChild(new Node1<String> (passwordByWritten));      
+                      //  System.out.println(nodes.getData());  
 		    }
-                    }
-                 
-                    if(flag == true ){
-                       System.out.println("Password is valid"); 
-                    }
-                    
-                
-                   
-		}catch(FileNotFoundException f) {
-			f.printStackTrace();
-		}
-                
-                
-	    }	    
+              return flag;
+          }
         
-  
           public static boolean letterTest(String passwordByWritten){
           //ArrayList<AbstractMap.SimpleEntry<String,Integer>> listOfPair = new ArrayList<>();
           //AbstractMap.SimpleEntry<String,Integer> apm;
@@ -112,7 +147,6 @@ public class PasswordBreaking {
 	    		
 	    		total++; 
 	    		//listOfPair.add(apm = new AbstractMap.SimpleEntry<>(passChars[k],1));
-	    		
 	    		
 	    	}else {
 	    		total--;
@@ -132,7 +166,7 @@ public class PasswordBreaking {
           public static boolean lenghtTest(String password){ //character length test
               int numberOfCharacters = password.length();
               
-              if(numberOfCharacters <= 0 && numberOfCharacters > 20){
+              if(numberOfCharacters > 20){
                   System.out.println("Password lenght must be in range 0-20!! Invalid");
                   return false;
               }
@@ -141,7 +175,6 @@ public class PasswordBreaking {
               }
               
           }
-          
           
          public static boolean numericTest(String password){ //the passport contain only numbers or not test
              
@@ -164,4 +197,3 @@ public class PasswordBreaking {
          }
  
 	}
-
