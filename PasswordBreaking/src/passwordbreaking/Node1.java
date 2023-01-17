@@ -1,4 +1,4 @@
-package com.company;
+package passwordbreaking;
 
 import java.util.ArrayList;
 import java.util.List;
