@@ -28,13 +28,13 @@ public class Tree1<String> {
         return res;
     }
 
-    public List<Node1<String>> PreOrderTraversal() { // Traversing the tree with preorder
+    public List<Node1<String>> PreOrderTraversal() { 
         ArrayList<Node1<String>> list = new ArrayList<Node1<String>>();
         build(root, list); // recursively
         return list;
     }
 
-    private void build(Node1<String> node, ArrayList<Node1<String>> arrayList) { // Method that used in the PreOrderTraversal method
+    private void build(Node1<String> node, ArrayList<Node1<String>> arrayList) {
         arrayList.add(node);
         for (Node1<String> child : node.getChildren()) {
             build(child, arrayList);
