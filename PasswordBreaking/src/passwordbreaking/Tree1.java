@@ -1,4 +1,4 @@
-package com.company;
+package passwordbreaking;
 
 
 public class Tree1<String> {
